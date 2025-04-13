@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>Standard Calculator</title>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: 'Courier New', monospace;
+	background-color:#dfbbda;
+}
+.mainwrapper {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 0;
+	height: 0;
+	margin: 0;
+	font-family: 'Courier New', monospace;
+	transition: all 0.4s;
+}
+.tutorialwrapper {
+	position: fixed;
+	right: 0;
+	width: 7%;
+	margin: 0;
+	font-family: 'Courier New', monospace;
+	transition: all 0.4s;
+	height: 100%;
+	z-index: 100;
+	background: darkorchid;
+	color: darkorchid;
+}
+.tutorialwrapper p, .tutorialwrapper h1 {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.tutorialwrapper span {
+	display: block;
+	position: absolute;
+	height:15%;
+	right: -5%;
+	top: 5%;
+	background: darkorchid;
+	color: lightpink;
+	padding: 4px;
+	cursor: pointer;
+	transition: all 0.25s;
+	z-index: 101;
+	transform: rotateZ(90deg);
+}
+
+table {
+	border-collapse: collapse;
+	border: 2px solid #896790;
+	height: 80%;
+	width: 100%;
+}
+td {
+	width: 25%;
+	border: 1px :solid lightpink;
+	text-align: center;
+	font-size: 1.8em;
+	transition: opacity 0.05s, background 0.2s, color 0.2s;
+	opacity: 0;
+}
+td:hover {
+	background: #f2bae4;
+	color: #FFE1F5;
+}
+td:active {
+	background: #896790;
+}
+.calc-output {
+	width: 100%;
+	height: 20%;
+	border: 2px solid #896790;
+	background-color:#9932CC;
+	text-align: right;
+	font-size: 6.3em;
+	opacity: 0;
+	transition: all 0.4s;
+}
+</style>
+</head>
+<body>
+<div class="mainwrapper">
+<div class="calc-output">0</div>
+<table>
+<tr>
+	<td onclick="calculatorFunction('ac')">AC</td>
+	<td onclick="calculatorFunction('c')">C</td>
+	<td onclick="calculatorFunction('%')">%</td>
+	<td onclick="calculatorFunction('/')">&div;</td>
+</tr>
+<tr>
+	<td onclick="calculatorFunction('7')">7</td>
+	<td onclick="calculatorFunction('8')">8</td>
+	<td onclick="calculatorFunction('9')">9</td>
+	<td onclick="calculatorFunction('x')">&times;</td>
+</tr>
+<tr>
+	<td onclick="calculatorFunction('4')">4</td>
+	<td onclick="calculatorFunction('5')">5</td>
+	<td onclick="calculatorFunction('6')">6</td>
+	<td onclick="calculatorFunction('-')">-</td>
+</tr>
+<tr>
+	<td onclick="calculatorFunction('1')">1</td>
+	<td onclick="calculatorFunction('2')">2</td>
+	<td onclick="calculatorFunction('3')">3</td>
+	<td onclick="calculatorFunction('+')">+</td>
+</tr>
+<tr>
+	<td onclick="calculatorFunction('00')">00</td>
+	<td onclick="calculatorFunction('0')">0</td>
+	<td onclick="calculatorFunction('.')">.</td>
+	<td onclick="calculatorFunction('=')">=</td>
+</tr>
+</table>
+</div>
+<div class="tutorialwrapper">
+<span>How To Use The Calculator</span>
+<h1>How To Use The Calculator</h1>
+<p>Step 1: Access an Online Calculator
+	<br>
+1. Open a web browser (e.g., Google Chrome, Mozilla Firefox).
+    <br>
+2. Visit this specific website that offers a calculator tool (e.g., Google).
+    <br>
+Step 2: Familiarize Yourself with the Calculator Interface
+    <br>
+1. Look for the calculator's interface, which typically includes:
+	* Number keys (0-9)
+	* Arithmetic operators (+, -, x, /)
+	<br>
+Step 3: Enter Numbers and Operations
+    <br>
+1. Click on the number keys to enter the numbers you want to calculate.
+    <br>
+2. Select the arithmetic operator (+, -, x, /) or other functions as needed.
+    <br>
+3. Use the calculator's interface to enter complex calculations, such as parentheses or exponents.
+    <br>
+Step 4: Calculate the Result
+    <br>
+1. Click the "=" button to compute the result.
+2. The calculator will display the result.
+   <br>
+Step 5: Clear or Reset the Calculator (Optional)
+   <br>
+1. If you want to perform a new calculation, click the "C" or "Clear" button to reset the calculator.
+  <hr>
+ Tip:
+ Make sure to use the correct order of operations (PEMDAS/BODMAS) when entering complex calculations.
+</p>
+</div>
+<script>
+var calcv1 = "", calcv2 = "", currentcalcv = "", operator = "", result = 0;
+function updateOutput() {
+	document.getElementsByClassName("calc-output")[0].innerText = currentcalcv === "" ? "0" : currentcalcv;
+}
+function calculatorFunction(e) {
+	switch (e) {
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			currentcalcv += e;
+			break;
+		case '0':
+		case '00':
+			if (currentcalcv !== "") currentcalcv += e;
+			break;
+		case '.':
+			if (!currentcalcv.includes('.')) currentcalcv += e;
+			break;
+		case '+':
+		case '-':
+		case 'x':
+		case '/':
+		case '%':
+			if (currentcalcv !== "") {
+				calcv1 = currentcalcv;
+				operator = e;
+				currentcalcv = "";
+			}
+			break;
+		case 'ac':
+			calcv1 = "";
+			calcv2 = "";
+			currentcalcv = "";
+			operator = "";
+			result = 0;
+			break;
+		case 'c':
+			currentcalcv = "";
+			break;
+		case '=':
+			if (calcv1 !== "" && operator !== "" && currentcalcv !== "") {
+				calcv2 = currentcalcv;
+				let num1 = parseFloat(calcv1);
+				let num2 = parseFloat(calcv2);
+				switch (operator) {
+					case '+':
+						result = num1 + num2;
+						break;
+					case '-':
+						result = num1 - num2;
+						break;
+					case 'x':
+						result = num1 * num2;
+						break;
+					case '/':
+						result = num2 !== 0 ? num1 / num2 : "Error";
+						break;
+					case '%':
+						result = num1 % num2;
+						break;
+				}
+				currentcalcv = result === "Error" ? "0" : result.toString();
+				calcv1 = "";
+				calcv2 = "";
+				operator = "";
+			}
+			break;
+	}
+	if (!'+-x/%'.includes(e)) updateOutput();
+}
+window.onload = function() {
+	document.getElementsByClassName("mainwrapper")[0].style.width = "50%";
+	setTimeout(function(){
+		document.getElementsByClassName("mainwrapper")[0].style.height = "100%";
+	}, 500);
+	setTimeout(function(){
+		document.getElementsByClassName("calc-output")[0].style.opacity = "1";
+		var tds  = document.getElementsByTagName("td"), i = 0;
+		function tdsDisplay() {
+			tds[i].style.opacity = "1";
+			i++;
+			if (i < tds.length) setTimeout(tdsDisplay, 75);
+		}
+		tdsDisplay();
+	}, 1000);
+};
+document.getElementsByClassName("tutorialwrapper")[0].addEventListener("click", function(e){
+	this.style.width = this.style.width === "100%" ? "7%" : "100%";
+	this.style.color = this.style.width === "100%" ? "white" : "darkorchid";
+	this.getElementsByTagName("span")[0].style.color = this.style.width === "100%" ? "darkorchid" : "lightpink";
+});
+</script>
+</body>
+</html>
